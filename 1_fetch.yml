@@ -4,9 +4,11 @@ packages:
   - scipiper
   - yaml
   - dplyr
+  - dataRetrieval
 
 sources:
   - 1_fetch/src/choose_timesteps.R
+  - 1_fetch/src/download_data.R
   - 1_fetch/src/create_fetch_tasks.R
   - 1_fetch/src/create_fetch_makefile.R
 
@@ -14,6 +16,7 @@ targets:
 
   1_fetch:
     depends:
+      - 1_fetch/out/nwis_data.rds.ind
       - 1_fetch/log/1_fetch_mesonet_tasks.ind
 
   # -- read config --
@@ -25,11 +28,19 @@ targets:
     command: viz_config[[I('timestep')]]
   nws_site: 
     command: viz_config[[I('nws_site')]]
+  nwis_site: 
+    command: viz_config[[I('nwis_site')]]
   
   timesteps:
     command: choose_timesteps(dates = dates, timestep = timestep) 
   
   # Fetch the data
+  1_fetch/out/nwis_data.rds.ind:
+    command: download_nwis_data(
+      ind_file = target_name,
+      site = nwis_site,
+      dates = dates)
+  
   fetch_mesonet_tasks:
     command: create_fetch_mesonet_tasks(
       timesteps = timesteps,

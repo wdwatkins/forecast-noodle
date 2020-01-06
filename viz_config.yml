@@ -4,3 +4,4 @@ dates:
 timestep: 12 # in hours
 
 nws_site: "OSGA4"
+nwis_site: "12061500"
