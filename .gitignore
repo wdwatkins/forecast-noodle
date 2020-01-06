@@ -38,3 +38,10 @@ vignettes/*.pdf
 
 # R Environment Variables
 .Renviron
+
+# Git ignore remake/scipiper files that get built
+*/tmp/*
+*/out/*
+!*/out/*.ind
+.remake
+*_tasks.yml
