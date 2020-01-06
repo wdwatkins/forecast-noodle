@@ -6,8 +6,8 @@ create_fetch_mesonet_tasks <- function(timesteps, nws_site, log_folder, tmp_fold
   
   # ---- main target for each task
   
-  download_data <- scipiper::create_task_step(
-    step_name = 'download_data',
+  download_mesonet_data <- scipiper::create_task_step(
+    step_name = 'download_mesonet_data',
     target_name = function(task_name, step_name, ...){
       file.path(tmp_folder, sprintf('mesonet_data_%s.rds', task_name))
     },
@@ -23,15 +23,14 @@ create_fetch_mesonet_tasks <- function(timesteps, nws_site, log_folder, tmp_fold
   )
   
   
-  
   # ---- combine into a task plan ---- #
   
   gif_task_plan <- scipiper::create_task_plan(
     task_names=tasks$task_name,
     task_steps=list(
-      download_data),
+      download_mesonet_data),
     add_complete=FALSE,
-    final_steps='download_data',
+    final_steps='download_mesonet_data',
     ind_dir=log_folder)
 }
 
