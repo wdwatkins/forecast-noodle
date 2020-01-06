@@ -1,0 +1,20 @@
+target_default: 1_fetch
+
+packages:
+  - scipiper
+
+sources:
+
+targets:
+
+  1_fetch:
+    depends:
+
+  # -- read config --
+  viz_config:
+    command: yaml.load_file('viz_config.yml')
+  dates:
+    command: viz_config[[I('dates')]]
+    
+    
+    
