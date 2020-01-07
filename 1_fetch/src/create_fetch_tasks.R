@@ -9,13 +9,13 @@ create_fetch_mesonet_tasks <- function(timesteps, nws_site, log_folder, tmp_fold
   download_mesonet_data <- scipiper::create_task_step(
     step_name = 'download_mesonet_data',
     target_name = function(task_name, step_name, ...){
-      file.path(tmp_folder, sprintf('mesonet_data_%s.rds', task_name))
+      file.path(tmp_folder, sprintf('mesonet_data_%s.rds.ind', task_name))
     },
     command = function(task_name, ...){
       cur_task <- dplyr::filter(rename(tasks, tn=task_name), tn==task_name)
       psprintf(
         "download_mesonet_data(",
-        "ind_file=ind_file,",
+        "ind_file=target_name,",
         sprintf("nws_site=I('%s'),", nws_site),
         sprintf("dateTime_str=I('%s'))", task_name)
       )
