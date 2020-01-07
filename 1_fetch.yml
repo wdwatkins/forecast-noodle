@@ -40,6 +40,8 @@ targets:
       ind_file = target_name,
       site = nwis_site,
       dates = dates)
+  1_fetch/out/nwis_data.rds:
+    command: s3_get('1_fetch/out/nwis_data.rds.ind')
   
   fetch_mesonet_tasks:
     command: create_fetch_mesonet_tasks(

@@ -22,15 +22,28 @@ create_fetch_mesonet_tasks <- function(timesteps, nws_site, log_folder, tmp_fold
     }
   )
   
+  s3_get_mesonet_data <- scipiper::create_task_step(
+    step_name = 's3_get_mesonet_data',
+    target_name = function(task_name, step_name, ...){
+      file.path(tmp_folder, sprintf('mesonet_data_%s.rds', task_name))
+    },
+    command = function(task_name, ...){
+      cur_task <- dplyr::filter(rename(tasks, tn=task_name), tn==task_name)
+      sprintf("s3_get('%s.ind')", 
+              file.path(tmp_folder, sprintf('mesonet_data_%s.rds', task_name)))
+    }
+  )
+  
   
   # ---- combine into a task plan ---- #
   
   gif_task_plan <- scipiper::create_task_plan(
     task_names=tasks$task_name,
     task_steps=list(
-      download_mesonet_data),
+      download_mesonet_data,
+      s3_get_mesonet_data),
     add_complete=FALSE,
-    final_steps='download_mesonet_data',
+    final_steps='s3_get_mesonet_data',
     ind_dir=log_folder)
 }
 
