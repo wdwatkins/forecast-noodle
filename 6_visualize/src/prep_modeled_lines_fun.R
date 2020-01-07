@@ -2,6 +2,8 @@ prep_modeled_lines_fun <- function(mesonet_data_ind, task_dateTime) {
   
   mesonet_data_thisframe <- 
     readRDS(as_data_file(mesonet_data_ind)) %>% 
+    # This could probably belong in a 2_process step, but at this point,
+    # I don't want to create `2_process.yml` for only 2 little targets.
     select(forecast_id = id,
            forecast_timestamp = issued,
            dateTime = valid,
