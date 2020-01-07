@@ -1,0 +1,11 @@
+version: 0.3.0
+name: 1_fetch/log/1_fetch_mesonet_tasks.ind
+type: file
+hash: 9c7b6bc97eb0f275458ac8985cfba70c
+time: 2020-01-07 15:14:08 UTC
+depends:
+  1_fetch_mesonet_tasks.yml: ba200d493997c5e316857d514561f6c1
+fixed: ~
+code:
+  functions: {}
+

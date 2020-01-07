@@ -10,7 +10,7 @@ download_mesonet_data <- function(ind_file, nws_site, dateTime_str) {
   url <- sprintf("https://mesonet.agron.iastate.edu/plotting/auto/plot/160/station:%s::dt:%s%%20%s::var:primary::dpi:100.csv",
                  nws_site, meso_date, meso_time)
   
-  meso_data <- read_csv(url, col_types = list(issued = col_character()))
+  meso_data <- readr::read_csv(url, col_types = list(issued = col_character()))
   saveRDS(meso_data, file = as_data_file(ind_file))
   s3_put(ind_file)
 }
