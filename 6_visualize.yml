@@ -73,6 +73,7 @@ targets:
   6_visualize/out/forecast_noodle.mp4:
     command: combine_frames_video(
       out_file=target_name,
-      animation_cfg=animation_cfg)
+      animation_cfg=animation_cfg,
+      timesteps = timesteps)
   #6_visualize/out/forecast_noodle.mp4.ind:
   #  command: s3_put(target_name, '6_visualize/out/forecast_noodle.mp4')

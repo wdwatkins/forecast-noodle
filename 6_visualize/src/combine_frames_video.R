@@ -1,8 +1,16 @@
-combine_frames_video <- function(out_file, animation_cfg) {
+combine_frames_video <- function(out_file, animation_cfg, timesteps) {
   #build video from pngs with ffmpeg
-  #note that this will use all frames in 6_visualize/tmp
   #have to rename files since can't use globbing with ffmpeg on Windows :(
-  png_frames <- list.files('6_visualize/tmp', full.names = TRUE)
+  
+  # Get list of frames that should be in this current build
+  png_frames_exist <- list.files('6_visualize/tmp', full.names = TRUE)
+  png_frames_fresh <- sprintf(
+    "6_visualize/tmp/frame_%s.png",
+    strftime(timesteps, format = '%Y%m%d_%H', tz = 'UTC')
+  )
+  stopifnot(all(png_frames_fresh %in% png_frames_exist))
+  png_frames <- png_frames_fresh
+  
   file_name_df <- tibble(origName = png_frames,
                          countFormatted = zeroPad(1:length(png_frames), padTo = 3),
                          newName = file.path("6_visualize/tmp", paste0("frame_", countFormatted, ".png")))
