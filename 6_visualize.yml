@@ -1,0 +1,78 @@
+target_default: 6_visualize
+
+include:
+  - 1_fetch.yml
+
+packages:
+  - ggplot2
+  - showtext
+  - sysfonts
+
+sources:
+  - 6_visualize/src/create_frame_tasks.R
+  - 6_visualize/src/create_frame_makefile.R
+  - 6_visualize/src/prep_watermark_fun.R
+  - 6_visualize/src/prep_base_plot_fun.R
+  - 6_visualize/src/combine_frames_video.R
+
+targets:
+
+  6_visualize:
+    depends:
+      - 6_visualize_frame_tasks.yml
+      - 6_visualize/log/6_visualize_frame_tasks.ind
+      - 6_visualize/out/forecast_noodle.mp4
+
+  stage_range:
+    command: viz_config[[I('stage')]]
+  
+  #### location of images on figure ####
+
+  component_placement:
+    command: viz_config[[I('component_placement')]]
+  watermark_x_pos:
+    command: component_placement[[I('watermark_x_pos')]]
+  watermark_y_pos:
+    command: component_placement[[I('watermark_y_pos')]]
+
+  #### static plot-component functions ####
+
+  # each plot-component function is a closure, i.e., a function that contains
+  # all the data it needs to run. the closure should accept 0 arguments.
+  # the closure should be saved into an RDS file with a corresponding .rds.ind indicator file
+  # to save on remake hashing time
+
+  watermark_fun:
+    command: prep_watermark_fun('6_visualize/in/usgs_logo_black.png', x_pos = watermark_x_pos, y_pos = watermark_y_pos)
+
+  base_plot_fun:
+    command: prep_base_plot_fun(timesteps, stage_range)
+  
+  #### animation frames ####
+
+  frames_tasks:
+    command: create_frame_tasks(
+      timesteps = timesteps,
+      folders = I(list(tmp=I('6_visualize/tmp'), log=I('6_visualize/log'))))
+  # tmp=temporary folder for holding files to only be created on 1 computer.
+  # log=folder for the few indicator files that don't correspond to a data file.
+
+  6_visualize_frame_tasks.yml:
+    command: create_frame_makefile(
+      makefile = target_name,
+      task_plan = frames_tasks,
+      remake_file = I('6_visualize.yml'))
+  6_visualize/log/6_visualize_frame_tasks.ind:
+    command: scmake(remake_file='6_visualize_frame_tasks.yml')
+  
+  #### combine frames into animation   ####
+  
+  animation_cfg:
+    command: viz_config[[I('animation')]]
+    
+  6_visualize/out/forecast_noodle.mp4:
+    command: combine_frames_video(
+      out_file=target_name,
+      animation_cfg=animation_cfg)
+  #6_visualize/out/forecast_noodle.mp4.ind:
+  #  command: s3_put(target_name, '6_visualize/out/forecast_noodle.mp4')
