@@ -1,4 +1,4 @@
-download_mesonet_data <- function(target_name, nws_site, dateTime_str) {
+download_mesonet_data <- function(ind_file, nws_site, dateTime_str) {
   
   # Some dummy stuff for now
   dateTime <- as.POSIXct(dateTime_str, format = "%Y%m%d_%H")
@@ -11,8 +11,8 @@ download_mesonet_data <- function(target_name, nws_site, dateTime_str) {
                  nws_site, meso_date, meso_time)
   
   meso_data <- read_csv(url, col_types = list(issued = col_character()))
-  saveRDS(meso_data, file = target_name)
-  
+  saveRDS(meso_data, file = as_data_file(ind_file))
+  s3_put(ind_file)
 }
 
 download_nwis_data <- function(ind_file, site, dates) {
@@ -29,5 +29,5 @@ download_nwis_data <- function(ind_file, site, dates) {
   # Write the data file and the indicator file
   data_file <- scipiper::as_data_file(ind_file)
   saveRDS(nwis_data, data_file)
-  sc_indicate(ind_file) # just until s3_put is added
+  s3_put(ind_file) 
 }

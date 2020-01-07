@@ -3,5 +3,5 @@ dates:
   end: '2019-12-21 00:00:00'
 timestep: 12 # in hours
 
-nws_site: "OSGA4"
+nws_site: "SRPW1"
 nwis_site: "12061500"
