@@ -47,8 +47,7 @@ targets:
     command: create_fetch_mesonet_tasks(
       timesteps = timesteps,
       nws_site = nws_site,
-      log_folder = I('1_fetch/log'),
-      tmp_folder = I('1_fetch/tmp'))
+      log_folder = I('1_fetch/log'))
   1_fetch_mesonet_tasks.yml:
     command: create_fetch_mesonet_makefile(
       makefile = target_name,

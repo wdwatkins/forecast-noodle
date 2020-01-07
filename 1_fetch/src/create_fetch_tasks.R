@@ -1,4 +1,4 @@
-create_fetch_mesonet_tasks <- function(timesteps, nws_site, log_folder, tmp_folder){
+create_fetch_mesonet_tasks <- function(timesteps, nws_site, log_folder){
   
   # prepare a data.frame with one row per task
   tasks <- tibble(timestep=timesteps) %>%
@@ -9,7 +9,7 @@ create_fetch_mesonet_tasks <- function(timesteps, nws_site, log_folder, tmp_fold
   download_mesonet_data <- scipiper::create_task_step(
     step_name = 'download_mesonet_data',
     target_name = function(task_name, step_name, ...){
-      file.path(tmp_folder, sprintf('mesonet_data_%s.rds.ind', task_name))
+      sprintf('1_fetch/out/mesonet_data_%s.rds.ind', task_name)
     },
     command = function(task_name, ...){
       cur_task <- dplyr::filter(rename(tasks, tn=task_name), tn==task_name)
@@ -25,12 +25,11 @@ create_fetch_mesonet_tasks <- function(timesteps, nws_site, log_folder, tmp_fold
   s3_get_mesonet_data <- scipiper::create_task_step(
     step_name = 's3_get_mesonet_data',
     target_name = function(task_name, step_name, ...){
-      file.path(tmp_folder, sprintf('mesonet_data_%s.rds', task_name))
+      sprintf('1_fetch/out/mesonet_data_%s.rds', task_name)
     },
     command = function(task_name, ...){
       cur_task <- dplyr::filter(rename(tasks, tn=task_name), tn==task_name)
-      sprintf("s3_get('%s.ind')", 
-              file.path(tmp_folder, sprintf('mesonet_data_%s.rds', task_name)))
+      sprintf("s3_get('1_fetch/out/mesonet_data_%s.rds.ind')", task_name)
     }
   )
   
