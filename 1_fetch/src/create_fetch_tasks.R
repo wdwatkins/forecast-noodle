@@ -15,7 +15,7 @@ create_fetch_mesonet_tasks <- function(timesteps, nws_site, log_folder, tmp_fold
       cur_task <- dplyr::filter(rename(tasks, tn=task_name), tn==task_name)
       psprintf(
         "download_mesonet_data(",
-        "target_name=target_name,",
+        "ind_file=ind_file,",
         sprintf("nws_site=I('%s'),", nws_site),
         sprintf("dateTime_str=I('%s'))", task_name)
       )
