@@ -1,0 +1,11 @@
+version: 0.3.0
+name: 6_visualize/log/6_visualize_frame_tasks.ind
+type: file
+hash: 5fe551d48e487ee816d71b520b4f884a
+time: 2020-01-07 17:50:19 UTC
+depends:
+  6_visualize_frame_tasks.yml: 3d9cc8677a00cf7448e430548173e8ac
+fixed: ~
+code:
+  functions: {}
+

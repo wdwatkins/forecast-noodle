@@ -1,11 +1,11 @@
 version: 0.3.0
 name: 1_fetch/out/nwis_data.rds.ind
 type: file
-hash: 6e0e757901da54b9927e24926c14366c
-time: 2020-01-07 15:13:48 UTC
+hash: d75859094ee274a83de884cd961784f3
+time: 2020-01-07 17:50:08 UTC
 depends:
   nwis_site: fa4e42ec22d10b9d1b14b220b8de2380
-  dates: 163d5192a39fd7925ea3a9092e011254
+  dates: 220d701eecc8dd63e1005189e64b763b
 fixed: f9182c3d358225816951ec2da5d9a4e3
 code:
   functions:

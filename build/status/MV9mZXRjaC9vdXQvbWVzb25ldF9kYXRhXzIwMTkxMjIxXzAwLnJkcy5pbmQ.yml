@@ -2,7 +2,7 @@ version: 0.3.0
 name: 1_fetch/out/mesonet_data_20191221_00.rds.ind
 type: file
 hash: 8f80b4ff8e9dc591db62af9401c38480
-time: 2020-01-07 15:14:06 UTC
+time: 2020-01-07 17:48:20 UTC
 depends: {}
 fixed: ee2e0df49318fc928da7a26021e882c3
 code:
