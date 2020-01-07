@@ -1,7 +1,7 @@
 create_fetch_mesonet_tasks <- function(timesteps, nws_site, log_folder, tmp_folder){
   
   # prepare a data.frame with one row per task
-  tasks <- data_frame(timestep=timesteps) %>%
+  tasks <- tibble(timestep=timesteps) %>%
     mutate(task_name = strftime(timestep, format = '%Y%m%d_%H', tz = 'UTC'))
   
   # ---- main target for each task
